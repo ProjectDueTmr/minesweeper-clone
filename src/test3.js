@@ -1,0 +1,1 @@
+export const test2 = 'hey from test 2. again'
