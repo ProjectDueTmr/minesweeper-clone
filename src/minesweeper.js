@@ -20,7 +20,13 @@ export function createBoard(boardSize, NumberOfMines) {
             const tile = {
                 element,
                 x,
-                y
+                y,
+                get status() {
+                    return this.element.dataset.status
+                },
+                set status(value) {
+                    this.element.dataset.status = value
+                }
             } 
 
             row.push(tile)
