@@ -1,7 +1,7 @@
 
 // LOGIC
 
-const TILES_STATUES = {
+export const TILES_STATUSES = {
     HIDDEN: 'hidden',
     MINE: 'mine',
     NUMBER: 'number',
@@ -16,7 +16,7 @@ export function createBoard(boardSize, NumberOfMines) {
         const row = []
         for(let y = 0; y < boardSize; y++) {
             const element = document.createElement('div')
-            element.dataset.status = TILES_STATUES.HIDDEN
+            element.dataset.status = TILES_STATUSES.HIDDEN
 
             const tile = {
                 element,
@@ -37,6 +37,18 @@ export function createBoard(boardSize, NumberOfMines) {
     }
 
     return board
+}
+
+export function markTile(tile) {
+    if(tile.status !== TILES_STATUSES.HIDDEN && tile.status !== TILES_STATUES.MARKED) {
+        return
+    }
+
+    if(tile.status === TILES_STATUSES.MARKED) {
+        tile.status = TILES_STATUSES.HIDDEN
+    } else {
+        tile.status = TILES_STATUSES.MARKED
+    }
 }
 
 function getMinePositions(boardSize, NumberOfMines){

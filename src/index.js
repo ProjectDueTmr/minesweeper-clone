@@ -1,29 +1,39 @@
 // DISPLAY/UI
 
 
-import { createBoard} from "./minesweeper";
+import { TILE_STATUSES, createBoard, markTile} from "./minesweeper";
 import { test2 } from "./test3";
 import "./style.css"
 
 const BOARD_SIZE = 10
-const NUMBER_OF_MINES = 2
+const NUMBER_OF_MINES = 10
 
 const board = (createBoard(BOARD_SIZE, NUMBER_OF_MINES))
 const boardElement = document.querySelector('.board')
+const minesLeftText = document.querySelector('[data-mine-count]')
+
 console.log(board)
 board.forEach(row => {
     row.forEach(tile => {
         boardElement.append(tile.element)
+        tile.element.addEventListener('click', () => {
+
+        })
+        tile.element.addEventListener('contextmenu', e => {
+            e.preventDefault()
+            markTile(tile)
+            listMinesLeft()
+        })
     })
 })
 boardElement.style.setProperty('--size', BOARD_SIZE)
+minesLeftText.textContent = NUMBER_OF_MINES
 
-// 1. Populate a board with tiles/mines
-// 2. left click on tiles
-    // a. reveal tiles 
-// 3. right click one tiles
-    // a. mark tiles
+function listMinesLeft() {
+    const markedTilesCount = board.reduce((count, row) => {
+        return count + row.filter(tile => tile.status === TILE_STATUS.MARKED).length
+    }, 0)
+
+    minesLeftText.textContent = NUMBER_OF_MINES - markedTilesCount
+}
 // 4. check for win/lose 
-
-console.log(test1);
-console.log(test2)
