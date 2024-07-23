@@ -1,7 +1,7 @@
 // DISPLAY/UI
 
 
-import { TILE_STATUSES, createBoard, markTile} from "./minesweeper";
+import { TILES_STATUSES, createBoard, markTile, revealTile} from "./minesweeper";
 import { test2 } from "./test3";
 import "./style.css"
 
@@ -12,12 +12,12 @@ const board = (createBoard(BOARD_SIZE, NUMBER_OF_MINES))
 const boardElement = document.querySelector('.board')
 const minesLeftText = document.querySelector('[data-mine-count]')
 
-console.log(board)
+
 board.forEach(row => {
     row.forEach(tile => {
         boardElement.append(tile.element)
         tile.element.addEventListener('click', () => {
-
+            revealTile(board, tile)
         })
         tile.element.addEventListener('contextmenu', e => {
             e.preventDefault()
@@ -31,7 +31,7 @@ minesLeftText.textContent = NUMBER_OF_MINES
 
 function listMinesLeft() {
     const markedTilesCount = board.reduce((count, row) => {
-        return count + row.filter(tile => tile.status === TILE_STATUS.MARKED).length
+        return count + row.filter(tile => tile.status === TILES_STATUSES.MARKED).length
     }, 0)
 
     minesLeftText.textContent = NUMBER_OF_MINES - markedTilesCount
